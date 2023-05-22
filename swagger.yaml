@@ -1,0 +1,228 @@
+openapi: 3.0.0
+info:
+  title: Jobs API
+  contact: {}
+  version: "1.0"
+servers:
+  - url: https://jobs-api-roman.herokuapp.com/api/v1
+    variables: {}
+paths:
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Register User
+      operationId: RegisterUser
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/RegisterUserRequest"
+                - example:
+                    name: bob
+                    email: bob@gmail.com
+                    password: secret
+            example:
+              name: bob
+              email: bob@gmail.com
+              password: secret
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login
+      operationId: Login
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/LoginRequest"
+                - example:
+                    email: john3@gmail.com
+                    password: secret
+            example:
+              email: john3@gmail.com
+              password: secret
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /jobs:
+    get:
+      tags:
+        - Jobs
+      summary: Get all jobs
+      operationId: Getalljobs
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+    post:
+      tags:
+        - Jobs
+      summary: Create job
+      operationId: Createjob
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/CreatejobRequest"
+                - example:
+                    company: Uber
+                    position: PHP Delveloper
+            example:
+              company: Uber
+              position: PHP Delveloper
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /jobs/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The job Id
+    get:
+      tags:
+        - Jobs
+      summary: Get single job
+      operationId: Getsinglejob
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+    patch:
+      tags:
+        - Jobs
+      summary: Update job
+      operationId: Updatejob
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/UpdatejobRequest"
+                - example:
+                    company: Google
+                    position: PHP developer
+            example:
+              company: Google
+              position: PHP developer
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+    delete:
+      tags:
+        - Jobs
+      summary: Delete job
+      operationId: Deletejob
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+components:
+  schemas:
+    RegisterUserRequest:
+      title: RegisterUserRequest
+      required:
+        - name
+        - email
+        - password
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        name: peter
+        email: peter@gmail.com
+        password: secret
+    LoginRequest:
+      title: LoginRequest
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: john3@gmail.com
+        password: secret
+    CreatejobRequest:
+      title: CreatejobRequest
+      required:
+        - company
+        - position
+      type: object
+      properties:
+        company:
+          type: string
+        position:
+          type: string
+      example:
+        company: Uber
+        position: PHP Delveloper
+    UpdatejobRequest:
+      title: UpdatejobRequest
+      required:
+        - company
+        - position
+      type: object
+      properties:
+        company:
+          type: string
+        position:
+          type: string
+      example:
+        company: Google
+        position: PHP developer
+  securitySchemes:
+    httpBearer:
+      type: http
+      scheme: bearer
+security:
+  - httpBearer: []
+tags:
+  - name: Auth
+  - name: Jobs
